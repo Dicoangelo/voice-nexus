@@ -155,15 +155,26 @@ export function calculateComplexityScore(signals: ComplexitySignals): number {
 
 /**
  * Map complexity score to tier
+ * ELITE TIER: Lower thresholds for more Opus usage
  */
 export function getComplexityTier(
     score: number,
-    thresholds: { balanced: number; deep: number } = { balanced: 0.3, deep: 0.7 }
+    thresholds: { balanced: number; deep: number } = { balanced: 0.25, deep: 0.55 } // ELITE defaults
 ): ReasoningTier {
     if (score >= thresholds.deep) return 'deep';
     if (score >= thresholds.balanced) return 'balanced';
     return 'fast';
 }
+
+/**
+ * Standard tier thresholds (for cost-conscious usage)
+ */
+export const STANDARD_THRESHOLDS = { balanced: 0.4, deep: 0.75 };
+
+/**
+ * Elite tier thresholds (maximum quality)
+ */
+export const ELITE_THRESHOLDS = { balanced: 0.25, deep: 0.55 };
 
 // =============================================================================
 // Provider Selection
@@ -171,25 +182,30 @@ export function getComplexityTier(
 
 /**
  * Select optimal providers based on complexity
+ * ELITE TIER: Prefers Claude Opus and ElevenLabs
  */
 export function selectProviders(
     tier: ReasoningTier,
-    availableReasoning: string[] = ['gemini-flash', 'claude-sonnet', 'claude-opus'],
-    availableTTS: string[] = ['browser', 'elevenlabs', 'gemini']
+    availableReasoning: string[] = ['claude-opus', 'claude-sonnet', 'gemini-flash'], // ELITE: Opus first
+    availableTTS: string[] = ['elevenlabs', 'gemini', 'browser'] // ELITE: ElevenLabs first
 ): ProviderSelection {
-    // Map tier to reasoning provider
-    let reasoning = availableReasoning[0];
-    if (tier === 'balanced' && availableReasoning.includes('claude-sonnet')) {
-        reasoning = 'claude-sonnet';
-    } else if (tier === 'deep' && availableReasoning.includes('claude-opus')) {
-        reasoning = 'claude-opus';
+    // ELITE: Map tier to reasoning provider (Opus-preferred)
+    let reasoning: string;
+    if (tier === 'deep') {
+        reasoning = availableReasoning.find(r => r.includes('opus')) || availableReasoning[0];
+    } else if (tier === 'balanced') {
+        reasoning = availableReasoning.find(r => r.includes('sonnet')) ||
+                   availableReasoning.find(r => r.includes('opus')) ||
+                   availableReasoning[0];
+    } else {
+        // Even fast tier uses Sonnet in Elite mode if available
+        reasoning = availableReasoning.find(r => r.includes('sonnet')) ||
+                   availableReasoning.find(r => r.includes('flash')) ||
+                   availableReasoning[0];
     }
 
-    // Map tier to TTS provider
-    let tts = availableTTS[0];
-    if ((tier === 'balanced' || tier === 'deep') && availableTTS.includes('elevenlabs')) {
-        tts = 'elevenlabs';
-    }
+    // ELITE: Always prefer ElevenLabs for voice quality
+    let tts = availableTTS.find(t => t === 'elevenlabs') || availableTTS[0];
 
     return {
         reasoning,

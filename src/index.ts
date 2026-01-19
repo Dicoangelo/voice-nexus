@@ -93,7 +93,9 @@ export {
     getComplexityTier,
     selectProviders,
     hasExplicitOverride,
-    formatComplexityResult
+    formatComplexityResult,
+    STANDARD_THRESHOLDS,
+    ELITE_THRESHOLDS
 } from './router';
 
 // Orchestrator

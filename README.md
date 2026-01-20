@@ -1,14 +1,117 @@
-# Voice Nexus
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1a2e,100:00d9ff&height=200&section=header&text=Voice%20Nexus&fontSize=50&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Universal%20Multi-Provider%20Voice%20Architecture&descSize=20&descAlignY=55" />
+</p>
 
-Universal multi-provider voice architecture. Seamlessly routes between STT (speech-to-text), reasoning (LLM), and TTS (text-to-speech) providers.
+<p align="center">
+  <strong>Seamlessly routes between STT, reasoning, and TTS providers</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Version-1.0.0-00d9ff?style=for-the-badge" alt="Version" />
+  <img src="https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
+  <img src="https://img.shields.io/badge/Tier-ELITE-gold?style=for-the-badge" alt="ELITE" />
+</p>
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           VOICE NEXUS ORCHESTRATOR                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         INPUT LAYER (STT)                            │   │
+│  │                                                                      │   │
+│  │   🎤 Audio ──→ [STT Provider] ──→ Transcribed Text                  │   │
+│  │                      │                                               │   │
+│  │         ┌────────────┼────────────┐                                 │   │
+│  │         │            │            │                                 │   │
+│  │     Gemini      Whisper      Browser                                │   │
+│  │     (Live)      (Batch)      (Fallback)                             │   │
+│  │     ~200ms      ~500ms       ~300ms                                 │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                     │                                       │
+│                                     ▼                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                      COMPLEXITY ROUTER                               │   │
+│  │                                                                      │   │
+│  │   Text ──→ [Signal Extraction] ──→ [Tier Selection] ──→ Provider    │   │
+│  │                     │                      │                         │   │
+│  │         ┌───────────┴───────────┐   ┌─────┴─────┐                   │   │
+│  │         │ Code:      +0.25      │   │   FAST    │ → Sonnet          │   │
+│  │         │ Reasoning: +0.20      │   │   <0.2    │   (ELITE)         │   │
+│  │         │ Creative:  +0.15      │   ├───────────┤                   │   │
+│  │         │ Navigation: -0.30     │   │ BALANCED  │ → Opus            │   │
+│  │         │ Question:   -0.10     │   │  0.2-0.5  │   (ELITE)         │   │
+│  │         └───────────────────────┘   ├───────────┤                   │   │
+│  │                                     │   DEEP    │ → Opus            │   │
+│  │                                     │   >0.5    │   (ELITE)         │   │
+│  │                                     └───────────┘                   │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                     │                                       │
+│                                     ▼                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                    KNOWLEDGE LAYER (Optional)                        │   │
+│  │                                                                      │   │
+│  │   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐             │   │
+│  │   │   Semantic   │  │   Research   │  │    Agent     │             │   │
+│  │   │   Search     │  │   Findings   │  │   Expertise  │             │   │
+│  │   │              │  │   Injection  │  │   Context    │             │   │
+│  │   └──────────────┘  └──────────────┘  └──────────────┘             │   │
+│  │                              │                                       │   │
+│  │              [Enriched Context → Reasoning]                         │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                     │                                       │
+│                                     ▼                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                    REASONING LAYER                                   │   │
+│  │                                                                      │   │
+│  │   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐             │   │
+│  │   │   CLAUDE     │  │   GEMINI     │  │    GROK      │             │   │
+│  │   │  Sonnet/Opus │  │  Flash/Pro   │  │  (Creative)  │             │   │
+│  │   │              │  │              │  │              │             │   │
+│  │   │ • Reasoning  │  │ • Realtime   │  │ • Chat       │             │   │
+│  │   │ • Code       │  │ • Grounding  │  │ • Creative   │             │   │
+│  │   │ • Analysis   │  │ • Speed      │  │ • Humor      │             │   │
+│  │   └──────────────┘  └──────────────┘  └──────────────┘             │   │
+│  │                              │                                       │   │
+│  │              [Response Text]                                        │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                     │                                       │
+│                                     ▼                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                      OUTPUT LAYER (TTS)                              │   │
+│  │                                                                      │   │
+│  │   ┌──────────────┐  ┌──────────────┐  ┌──────────────┐             │   │
+│  │   │  ELEVENLABS  │  │   GEMINI     │  │   BROWSER    │             │   │
+│  │   │  (Premium)   │  │  (Native)    │  │  (Fallback)  │             │   │
+│  │   │              │  │              │  │              │             │   │
+│  │   │ • Emotional  │  │ • Fast       │  │ • Free       │             │   │
+│  │   │ • 9 Voices   │  │ • Integrated │  │ • Universal  │             │   │
+│  │   │ • Streaming  │  │ • Low-latency│  │ • Basic      │             │   │
+│  │   └──────────────┘  └──────────────┘  └──────────────┘             │   │
+│  │                              │                                       │   │
+│  │              [Audio Output → 🔊]                                    │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
 
 ## Features
 
 - **3 Voice Modes**: Realtime, Turn-based, Hybrid
 - **Provider Agnostic**: Works with any STT, LLM, or TTS service
-- **Complexity Routing**: Auto-selects reasoning tier based on query
+- **ELITE Complexity Routing**: Auto-selects reasoning tier (Opus-first)
 - **Knowledge Injection**: Enrich queries with external knowledge
 - **Real-time Events**: Callbacks for all processing stages
+- **ElevenLabs Integration**: 9 premium voices with emotional range
+
+---
 
 ## Installation
 
@@ -20,28 +123,31 @@ yarn add @antigravity/voice-nexus
 pnpm add @antigravity/voice-nexus
 ```
 
+---
+
 ## Quick Start
 
 ```typescript
 import { createVoiceNexus, type ReasoningProvider } from '@antigravity/voice-nexus';
 
 // 1. Define your reasoning provider
-const myReasoning: ReasoningProvider = {
-    name: 'openai',
+const claudeProvider: ReasoningProvider = {
+    name: 'claude',
     models: {
-        fast: 'gpt-3.5-turbo',
-        balanced: 'gpt-4',
-        deep: 'gpt-4-turbo'
+        fast: 'claude-sonnet-4-20250514',      // ELITE: Sonnet even for fast
+        balanced: 'claude-opus-4-20250514',    // ELITE: Opus for balanced
+        deep: 'claude-opus-4-20250514'         // ELITE: Opus for deep
     },
-    isAvailable: () => !!process.env.OPENAI_API_KEY,
+    isAvailable: () => !!process.env.ANTHROPIC_API_KEY,
     generate: async (prompt, config) => {
-        const response = await openai.chat.completions.create({
-            model: config.model || 'gpt-4',
-            messages: [{ role: 'user', content: prompt }]
+        const response = await anthropic.messages.create({
+            model: config.model || 'claude-opus-4-20250514',
+            messages: [{ role: 'user', content: prompt }],
+            max_tokens: 4096
         });
         return {
-            text: response.choices[0].message.content || '',
-            model: config.model || 'gpt-4'
+            text: response.content[0].text,
+            model: config.model || 'claude-opus-4-20250514'
         };
     }
 };
@@ -52,27 +158,108 @@ const nexus = createVoiceNexus({
         mode: 'turn-based',
         knowledgeInjection: false,
         providers: {
-            reasoning: myReasoning
+            reasoning: claudeProvider
         }
     },
     events: {
         onTranscriptUpdate: (t) => console.log(`[${t.role}] ${t.text}`),
-        onComplexityAnalyzed: (c) => console.log(`Complexity: ${c.tier}`)
+        onComplexityAnalyzed: (c) => console.log(`Complexity: ${c.score.toFixed(2)} → ${c.tier}`)
     }
 });
 
 // 3. Process text input
-const response = await nexus.processTextInput('How do I implement OAuth2?');
+const response = await nexus.processTextInput('How do I architect a distributed system?');
 console.log(response?.text);
 ```
 
+---
+
+## ELITE TIER Configuration
+
+| Setting | ELITE Value | Standard Value | Description |
+|---------|-------------|----------------|-------------|
+| Fast Threshold | 0.2 | 0.3 | Lower = more orchestration |
+| Deep Threshold | 0.5 | 0.7 | Lower = more Opus usage |
+| Fast Model | Sonnet | Flash | Quality even for simple |
+| Balanced Model | Opus | Sonnet | Opus by default |
+| Deep Model | Opus | Opus | Maximum reasoning |
+| TTS Provider | ElevenLabs | Gemini | Premium audio always |
+
+### Use Standard Tier
+
+```typescript
+import { createVoiceNexus, STANDARD_THRESHOLDS } from '@antigravity/voice-nexus';
+
+const nexus = createVoiceNexus({
+    config: {
+        mode: 'turn-based',
+        thresholds: STANDARD_THRESHOLDS  // 0.4/0.75 thresholds
+    }
+});
+```
+
+---
+
 ## Voice Modes
 
-| Mode | Description | Latency | Use Case |
-|------|-------------|---------|----------|
-| **Realtime** | Streaming STT + fast LLM + streaming TTS | ~500ms | Live conversation |
+| Mode | Flow | Latency | Use Case |
+|------|------|---------|----------|
+| **Realtime** | Streaming STT → Fast LLM → Streaming TTS | ~500ms | Live conversation |
 | **Turn-based** | Complete STT → LLM → TTS pipeline | ~2-5s | High quality responses |
 | **Hybrid** | Auto-switches based on complexity | Variable | Best of both |
+
+### Mode Selection
+
+```typescript
+// Realtime: Fast responses, live feel
+nexus.setMode('realtime');
+
+// Turn-based: Higher quality, full processing
+nexus.setMode('turn-based');
+
+// Hybrid: System decides based on query
+nexus.setMode('hybrid');
+```
+
+---
+
+## Complexity Router
+
+### Signal Extraction
+
+| Signal | Pattern | Impact |
+|--------|---------|--------|
+| **Token count** | Length of query | +0.0 to +0.25 |
+| **Code indicators** | `implement`, `debug`, `function` | +0.25 |
+| **Reasoning** | `analyze`, `compare`, `why` | +0.20 |
+| **Creative** | `brainstorm`, `imagine` | +0.15 |
+| **Navigation** | `go to`, `open`, `show` | -0.30 |
+| **Question** | `what is`, `how do` | -0.10 |
+| **Domain** | `architecture`, `distributed` | +0.30 |
+
+### Tier Selection (ELITE)
+
+| Tier | Complexity | Model | TTS |
+|------|------------|-------|-----|
+| **Fast** | <0.2 | Claude Sonnet | ElevenLabs |
+| **Balanced** | 0.2-0.5 | Claude Opus | ElevenLabs |
+| **Deep** | >0.5 | Claude Opus | ElevenLabs |
+
+### Usage
+
+```typescript
+import { analyzeComplexity, ELITE_THRESHOLDS } from '@antigravity/voice-nexus';
+
+const result = analyzeComplexity('Design a microservices architecture');
+// {
+//   score: 0.55,
+//   tier: 'deep',
+//   signals: { hasCodeIndicators: false, hasReasoningIndicators: true, ... },
+//   recommendedProvider: { reasoning: 'claude-opus', tts: 'elevenlabs' }
+// }
+```
+
+---
 
 ## Provider Interfaces
 
@@ -98,13 +285,6 @@ interface ReasoningProvider {
     generate(prompt: string, config: ReasoningConfig): Promise<ReasoningResult>;
     isAvailable(): boolean;
 }
-
-interface ReasoningConfig {
-    tier: 'fast' | 'balanced' | 'deep';
-    systemPrompt?: string;
-    maxTokens?: number;
-    temperature?: number;
-}
 ```
 
 ### TTS Provider
@@ -121,37 +301,7 @@ interface TTSProvider {
 }
 ```
 
-## Complexity Router
-
-Voice Nexus automatically analyzes queries to select the optimal reasoning tier.
-
-```typescript
-import { analyzeComplexity } from '@antigravity/voice-nexus';
-
-const result = analyzeComplexity('How do I architect a distributed system?');
-// {
-//   score: 0.72,
-//   tier: 'deep',
-//   signals: { hasCodeIndicators: false, hasReasoningIndicators: true, ... },
-//   recommendedProvider: { reasoning: 'claude-opus', tts: 'elevenlabs' }
-// }
-```
-
-### Complexity Signals
-
-| Signal | Description | Score Impact |
-|--------|-------------|--------------|
-| Token count | Longer queries | +0.0-0.3 |
-| Code indicators | `implement`, `debug`, `function` | +0.25 |
-| Reasoning indicators | `analyze`, `compare`, `why` | +0.2 |
-| Creative indicators | `brainstorm`, `imagine` | +0.15 |
-| Navigation indicators | `go to`, `open`, `show` | -0.3 |
-
-### Tier Selection
-
-- **Fast** (score < 0.3): Simple queries → GPT-3.5, Gemini Flash
-- **Balanced** (0.3-0.7): Standard queries → GPT-4, Claude Sonnet
-- **Deep** (> 0.7): Complex reasoning → Claude Opus, GPT-4 Turbo
+---
 
 ## Event Callbacks
 
@@ -159,34 +309,50 @@ const result = analyzeComplexity('How do I architect a distributed system?');
 const nexus = createVoiceNexus({
     config: { mode: 'turn-based', knowledgeInjection: false },
     events: {
+        // Transcript updates
         onTranscriptUpdate: (transcript) => {
             console.log(`[${transcript.role}] ${transcript.text}`);
         },
+
+        // Live streaming (realtime mode)
         onPartialTranscript: (partial) => {
-            // Live streaming updates
             updateUI(partial.text);
         },
+
+        // Processing state
         onProcessingStart: () => setLoading(true),
         onProcessingEnd: () => setLoading(false),
+
+        // Complexity analysis
         onComplexityAnalyzed: (result) => {
             console.log(`Complexity: ${result.score.toFixed(2)} → ${result.tier}`);
+            console.log(`Provider: ${result.recommendedProvider.reasoning}`);
         },
+
+        // Provider changes
         onProviderSwitch: (providers) => {
-            console.log('Switched providers:', providers);
+            console.log('Switched to:', providers);
         },
+
+        // Knowledge injection
         onKnowledgeInjected: (context) => {
             console.log(`Injected ${context.searchResults.length} results`);
         },
+
+        // Errors
         onError: (error) => {
             console.error('Voice Nexus error:', error);
         },
+
+        // Full state changes
         onStateChange: (state) => {
-            // Full state updates
             updateUIState(state);
         }
     }
 });
 ```
+
+---
 
 ## Knowledge Injection
 
@@ -211,12 +377,14 @@ const nexus = createVoiceNexus({
         agent: {
             id: 'research-agent',
             name: 'Dr. Ira',
-            expertise: ['AI', 'systems design']
+            expertise: ['AI', 'systems design', 'research']
         }
     },
     knowledgeInjector
 });
 ```
+
+---
 
 ## Multi-Provider Setup
 
@@ -249,8 +417,27 @@ const nexus = createVoiceNexus({
 await nexus.start();
 
 // Or process directly
-const response = await nexus.processTextInput('Analyze this code...');
+const response = await nexus.processTextInput('Analyze this architecture...');
 ```
+
+---
+
+## ElevenLabs Voice Mapping
+
+ELITE tier always uses ElevenLabs with agent-specific voices:
+
+| Agent | Voice | Character |
+|-------|-------|-----------|
+| Dr. Ira | Clyde | Deep, authoritative |
+| Mike | Liam | Narrative, American |
+| Caleb | Drew | News anchor |
+| Paramdeep | Charlie | Casual |
+| Bilal | Fin | Energetic |
+| Noah | Dorothy | Gentle |
+| Helen | Domi | Expressive |
+| Perri | Rachel | Clear |
+
+---
 
 ## State Management
 
@@ -275,8 +462,24 @@ nexus.clearTranscripts();
 
 // Change mode
 nexus.setMode('realtime');
+
+// Stop session
+await nexus.stop();
 ```
+
+---
+
+## Related Packages
+
+- **[@antigravity/cpb-core](https://github.com/Dicoangelo/cpb-core)** - CPB precision orchestration
+- **[ResearchGravity](https://github.com/Dicoangelo/ResearchGravity)** - Research framework
+
+---
 
 ## License
 
 MIT © Dicoangelo
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1a2e,100:00d9ff&height=100&section=footer" />
+</p>

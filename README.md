@@ -116,11 +116,11 @@
 ## Installation
 
 ```bash
-npm install @antigravity/voice-nexus
+npm install @metaventionsai/voice-nexus
 # or
-yarn add @antigravity/voice-nexus
+yarn add @metaventionsai/voice-nexus
 # or
-pnpm add @antigravity/voice-nexus
+pnpm add @metaventionsai/voice-nexus
 ```
 
 ---
@@ -128,7 +128,7 @@ pnpm add @antigravity/voice-nexus
 ## Quick Start
 
 ```typescript
-import { createVoiceNexus, type ReasoningProvider } from '@antigravity/voice-nexus';
+import { createVoiceNexus, type ReasoningProvider } from '@metaventionsai/voice-nexus';
 
 // 1. Define your reasoning provider
 const claudeProvider: ReasoningProvider = {
@@ -188,7 +188,7 @@ console.log(response?.text);
 ### Use Standard Tier
 
 ```typescript
-import { createVoiceNexus, STANDARD_THRESHOLDS } from '@antigravity/voice-nexus';
+import { createVoiceNexus, STANDARD_THRESHOLDS } from '@metaventionsai/voice-nexus';
 
 const nexus = createVoiceNexus({
     config: {
@@ -248,7 +248,7 @@ nexus.setMode('hybrid');
 ### Usage
 
 ```typescript
-import { analyzeComplexity, ELITE_THRESHOLDS } from '@antigravity/voice-nexus';
+import { analyzeComplexity, ELITE_THRESHOLDS } from '@metaventionsai/voice-nexus';
 
 const result = analyzeComplexity('Design a microservices architecture');
 // {
@@ -389,7 +389,7 @@ const nexus = createVoiceNexus({
 ## Multi-Provider Setup
 
 ```typescript
-import { createVoiceNexus } from '@antigravity/voice-nexus';
+import { createVoiceNexus } from '@metaventionsai/voice-nexus';
 
 const nexus = createVoiceNexus({
     config: {
@@ -471,7 +471,7 @@ await nexus.stop();
 
 ## Related Packages
 
-- **[@antigravity/cpb-core](https://github.com/Dicoangelo/cpb-core)** - CPB precision orchestration
+- **[@metaventionsai/cpb-core](https://github.com/Dicoangelo/cpb-core)** - CPB precision orchestration
 - **[ResearchGravity](https://github.com/Dicoangelo/ResearchGravity)** - Research framework
 
 ---

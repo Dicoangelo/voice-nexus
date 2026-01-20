@@ -1,5 +1,5 @@
 {
-  "name": "@antigravity/voice-nexus",
+  "name": "@metaventionsai/voice-nexus",
   "version": "1.0.0",
   "description": "Universal multi-provider voice architecture - seamless routing between STT, reasoning, and TTS providers",
   "main": "dist/index.js",

@@ -158,7 +158,11 @@ export class VoiceNexusOrchestrator {
             this.updateState({ isProcessing: true });
 
             // 1. Analyze complexity
-            const complexity = analyzeComplexity(text, this.config.complexity);
+            const thresholds = this.config.complexity ? {
+                balanced: this.config.complexity.balancedThreshold ?? 0.25,
+                deep: this.config.complexity.deepThreshold ?? 0.55
+            } : undefined;
+            const complexity = analyzeComplexity(text, thresholds);
             this.updateState({ lastComplexityScore: complexity.score });
             this.events.onComplexityAnalyzed?.(complexity);
 

@@ -205,7 +205,7 @@ export function selectProviders(
     }
 
     // ELITE: Always prefer ElevenLabs for voice quality
-    let tts = availableTTS.find(t => t === 'elevenlabs') || availableTTS[0];
+    const tts = availableTTS.find(t => t === 'elevenlabs') || availableTTS[0];
 
     return {
         reasoning,

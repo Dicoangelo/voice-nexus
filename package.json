@@ -1,25 +1,25 @@
 {
   "name": "@metaventionsai/voice-nexus",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Universal multi-provider voice architecture - seamless routing between STT, reasoning, and TTS providers",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     },
     "./types": {
+      "types": "./dist/types.d.ts",
       "import": "./dist/types.mjs",
-      "require": "./dist/types.js",
-      "types": "./dist/types.d.ts"
+      "require": "./dist/types.js"
     },
     "./router": {
+      "types": "./dist/router.d.ts",
       "import": "./dist/router.mjs",
-      "require": "./dist/router.js",
-      "types": "./dist/router.d.ts"
+      "require": "./dist/router.js"
     }
   },
   "files": [
